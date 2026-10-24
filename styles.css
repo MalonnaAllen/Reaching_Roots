@@ -135,6 +135,10 @@ h1 {
   display: none;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -235,6 +239,311 @@ a:hover {
   font-size: 0.85rem;
 }
 
+.app-body {
+  min-height: 100vh;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 5rem;
+  padding: 0 5vw;
+  border-bottom: 1px solid var(--line);
+  background: var(--white);
+}
+
+.site-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--ink);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.2rem;
+}
+
+.site-brand:hover {
+  text-decoration: none;
+}
+
+.brand-mark-small {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0;
+  color: var(--green-dark);
+  border-color: var(--line);
+  font-size: 0.8rem;
+}
+
+.site-nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.nav-link.is-active {
+  color: var(--green-dark);
+}
+
+.profile-button {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem;
+  border: 0;
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  color: var(--green-dark);
+  background: var(--sage);
+  font-size: 0.75rem;
+}
+
+.profile-menu {
+  position: absolute;
+  z-index: 2;
+  top: 3.25rem;
+  right: 0;
+  display: grid;
+  min-width: 10rem;
+  padding: 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  background: var(--white);
+  box-shadow: 0 0.75rem 2rem rgba(36, 53, 44, 0.12);
+}
+
+.profile-menu button,
+.profile-menu a {
+  padding: 0.7rem 0.8rem;
+  border: 0;
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.profile-menu button:hover,
+.profile-menu a:hover {
+  background: var(--cream);
+  text-decoration: none;
+}
+
+.dashboard {
+  width: min(100% - 3rem, 72rem);
+  margin: 0 auto;
+  padding: 4.5rem 0;
+}
+
+.dashboard-intro,
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.dashboard-intro h1 {
+  max-width: none;
+  color: var(--ink);
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+}
+
+.dashboard-copy {
+  margin: 1rem 0 0;
+  color: var(--muted);
+}
+
+.role-badge,
+.event-count {
+  padding: 0.45rem 0.8rem;
+  border-radius: 2rem;
+  color: var(--green-dark);
+  background: var(--sage);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 3rem 0 4.5rem;
+}
+
+.action-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  color: var(--ink);
+  background: var(--white);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.action-card:hover {
+  border-color: var(--green);
+}
+
+.action-card small {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--muted);
+}
+
+.action-icon {
+  display: grid;
+  flex: 0 0 2.5rem;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  color: var(--white);
+  background: var(--green);
+  font-size: 1.3rem;
+}
+
+.events-section h2 {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+}
+
+.event-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.event-card {
+  display: grid;
+  grid-template-columns: 4rem 1fr auto;
+  align-items: start;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: var(--white);
+}
+
+.event-date {
+  display: grid;
+  place-items: center;
+  padding: 0.7rem 0.25rem;
+  border-radius: 0.35rem;
+  color: var(--green-dark);
+  background: var(--sage);
+}
+
+.event-date strong {
+  font-size: 1.5rem;
+}
+
+.event-date span,
+.event-type {
+  color: var(--coral);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.event-details h3 {
+  margin: 0.25rem 0 0.5rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.35rem;
+}
+
+.event-details p {
+  margin: 0.2rem 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.host-line {
+  display: inline-block;
+  margin-top: 0.7rem;
+  color: var(--green-dark);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.text-button {
+  border: 0;
+  color: var(--coral);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.empty-state {
+  margin: 1.5rem 0;
+  padding: 2rem;
+  border: 1px dashed var(--line);
+  color: var(--muted);
+  text-align: center;
+}
+
+.modal {
+  width: min(100% - 2rem, 34rem);
+  padding: 0;
+  border: 0;
+  border-radius: 0.5rem;
+  color: var(--ink);
+  background: var(--white);
+  box-shadow: 0 1rem 3rem rgba(36, 53, 44, 0.2);
+}
+
+.modal::backdrop {
+  background: rgba(36, 53, 44, 0.45);
+}
+
+.modal-card {
+  display: grid;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.modal-card h2 {
+  font-size: 2rem;
+}
+
+.modal-card > p:not(.eyebrow):not(.form-status) {
+  margin: -0.5rem 0 0.5rem;
+  color: var(--muted);
+}
+
+.close-button {
+  justify-self: end;
+  margin: -0.75rem -0.5rem -1.5rem;
+  border: 0;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
 @media (max-width: 760px) {
   .auth-shell {
     display: block;
@@ -253,6 +562,43 @@ a:hover {
     width: min(100% - 2rem, 38rem);
     margin: 0 auto;
     padding: 3rem 0;
+  }
+
+  .site-header {
+    padding: 0 1rem;
+  }
+
+  .site-nav {
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    display: none;
+  }
+
+  .dashboard {
+    width: min(100% - 2rem, 72rem);
+    padding: 3rem 0;
+  }
+
+  .dashboard-intro,
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr;
+    margin: 2.5rem 0 3.5rem;
+  }
+
+  .event-card {
+    grid-template-columns: 3.5rem 1fr;
+  }
+
+  .event-card .text-button {
+    grid-column: 2;
+    justify-self: start;
   }
 }
 

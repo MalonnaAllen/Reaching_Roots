@@ -135,7 +135,22 @@ loginForm.addEventListener("submit", (event) => {
     return;
   }
 
-  status.textContent = "Your login details are ready to be submitted.";
+  const formData = new FormData(loginForm);
+  const credentials = Object.fromEntries(formData.entries());
+  status.textContent = "Logging you in...";
+
+  fetch("/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(credentials),
+  })
+    .then((response) => readJsonResponse(response, "Unable to log in."))
+    .then((result) => {
+      window.location.assign(result.redirect);
+    })
+    .catch((error) => {
+      status.textContent = error.message;
+    });
 });
 
 loadLocations();

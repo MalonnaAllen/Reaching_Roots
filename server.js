@@ -3,12 +3,14 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const { createUser, listLocations } = require("./middleware");
+const routes = require("./routes");
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
+app.use(routes);
 app.get("/api/locations", listLocations);
 app.post("/api/users", createUser);
 
@@ -17,7 +19,9 @@ app.use((error, req, res, next) => {
   const message =
     req.path === "/api/locations"
       ? "Unable to load cities. Check the database connection."
-      : "Unable to create the account right now.";
+      : req.path === "/api/login"
+        ? "Unable to log in right now."
+        : "Unable to create the account right now.";
   res.status(500).json({ error: message });
 });
 

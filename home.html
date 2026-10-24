@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Your Reaching Roots community events dashboard."
+    />
+    <title>Home | Reaching Roots</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="app-body">
+    <header class="site-header">
+      <a class="site-brand" href="home.html" aria-label="Reaching Roots home">
+        <span class="brand-mark brand-mark-small" aria-hidden="true">RR</span>
+        <span>Reaching Roots</span>
+      </a>
+      <nav class="site-nav" aria-label="Account navigation">
+        <a class="nav-link is-active" href="#events">My events</a>
+        <button
+          class="profile-button"
+          id="profile-menu-button"
+          type="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="profile-menu"
+        >
+          <span class="avatar" aria-hidden="true">MA</span>
+          <span id="profile-name">Malonna</span>
+        </button>
+        <div class="profile-menu" id="profile-menu" role="menu" hidden>
+          <button type="button" id="edit-profile-button">Edit profile</button>
+          <a href="index.html">Log out</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="dashboard">
+      <section class="dashboard-intro" aria-labelledby="dashboard-heading">
+        <div>
+          <p class="eyebrow">Your community</p>
+          <h1 id="dashboard-heading">Good morning, Malonna.</h1>
+          <p class="dashboard-copy">
+            Keep growing your roots with the people and events that matter to
+            you.
+          </p>
+        </div>
+        <div class="role-badge" id="role-badge">Attendee</div>
+      </section>
+
+      <section class="quick-actions" aria-label="Event actions">
+        <button class="action-card" id="enroll-button" type="button">
+          <span class="action-icon" aria-hidden="true">+</span>
+          <span>
+            <strong>Enroll in an event</strong>
+            <small>Use the code from an event host.</small>
+          </span>
+        </button>
+        <button class="action-card host-action is-hidden" id="create-button" type="button">
+          <span class="action-icon" aria-hidden="true">✦</span>
+          <span>
+            <strong>Create an event</strong>
+            <small>Invite your community to gather.</small>
+          </span>
+        </button>
+      </section>
+
+      <section class="events-section" id="events" aria-labelledby="events-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Coming up</p>
+            <h2 id="events-heading">Events you’re enrolled in</h2>
+          </div>
+          <span class="event-count" id="event-count">2 events</span>
+        </div>
+        <div class="event-grid" id="event-list">
+          <article class="event-card">
+            <div class="event-date"><strong>18</strong><span>JUN</span></div>
+            <div class="event-details">
+              <span class="event-type">Community garden</span>
+              <h3>Summer planting day</h3>
+              <p>Saturday, June 18 · 10:00 AM</p>
+              <p>Maple Street Community Garden</p>
+              <span class="host-line">Hosted by Green Neighbors</span>
+            </div>
+            <button class="text-button" type="button" data-remove-event="1">
+              Leave event
+            </button>
+          </article>
+          <article class="event-card">
+            <div class="event-date"><strong>24</strong><span>JUN</span></div>
+            <div class="event-details">
+              <span class="event-type">Neighborhood meetup</span>
+              <h3>Porch conversation</h3>
+              <p>Friday, June 24 · 6:30 PM</p>
+              <p>Oakwood Library courtyard</p>
+              <span class="host-line">Hosted by Oakwood Neighbors</span>
+            </div>
+            <button class="text-button" type="button" data-remove-event="2">
+              Leave event
+            </button>
+          </article>
+        </div>
+        <p class="empty-state is-hidden" id="empty-state">
+          You’re not enrolled in any upcoming events yet. Use an enrollment
+          code to find your next gathering.
+        </p>
+      </section>
+    </main>
+
+    <dialog class="modal" id="enroll-dialog">
+      <form class="modal-card" id="enroll-form" method="dialog">
+        <button class="close-button" type="button" data-close-dialog aria-label="Close">
+          ×
+        </button>
+        <p class="eyebrow">Join your community</p>
+        <h2>Enroll in an event</h2>
+        <p>Enter the enrollment code shared by the event host.</p>
+        <label class="field-group" for="enroll-code">
+          Enrollment code
+          <input id="enroll-code" name="code" placeholder="e.g. ROOT-4821" required />
+        </label>
+        <p class="form-status" id="enroll-status" role="status"></p>
+        <button class="submit-button" type="submit">Enroll</button>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="create-dialog">
+      <form class="modal-card" id="create-form" method="dialog">
+        <button class="close-button" type="button" data-close-dialog aria-label="Close">
+          ×
+        </button>
+        <p class="eyebrow">Bring people together</p>
+        <h2>Create an event</h2>
+        <p>Your event will receive a unique enrollment code to share.</p>
+        <label class="field-group" for="event-title">
+          Event name
+          <input id="event-title" name="title" placeholder="Name your event" required />
+        </label>
+        <div class="form-row">
+          <label class="field-group" for="event-date">
+            Date
+            <input id="event-date" name="date" type="date" required />
+          </label>
+          <label class="field-group" for="event-time">
+            Time
+            <input id="event-time" name="time" type="time" required />
+          </label>
+        </div>
+        <label class="field-group" for="event-location">
+          Location
+          <input id="event-location" name="location" placeholder="Where will you meet?" required />
+        </label>
+        <p class="form-status" id="create-status" role="status"></p>
+        <button class="submit-button" type="submit">Create event</button>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="profile-dialog">
+      <form class="modal-card" id="profile-form" method="dialog">
+        <button class="close-button" type="button" data-close-dialog aria-label="Close">
+          ×
+        </button>
+        <p class="eyebrow">Your account</p>
+        <h2>Edit profile</h2>
+        <div class="form-row">
+          <label class="field-group" for="profile-first-name">
+            First name
+            <input id="profile-first-name" name="firstName" value="Malonna" required />
+          </label>
+          <label class="field-group" for="profile-last-name">
+            Last name
+            <input id="profile-last-name" name="lastName" value="Allen" required />
+          </label>
+        </div>
+        <label class="field-group" for="profile-role">
+          I participate as a
+          <select id="profile-role" name="role">
+            <option value="attendee">Attendee</option>
+            <option value="host">Host</option>
+          </select>
+        </label>
+        <p class="form-status" id="profile-status" role="status"></p>
+        <button class="submit-button" type="submit">Save changes</button>
+      </form>
+    </dialog>
+    <script src="home.js" defer></script>
+  </body>
+</html>
