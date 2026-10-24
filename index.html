@@ -3,8 +3,188 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reaching Roots</title>
+    <meta
+      name="description"
+      content="Log in or create an account for Reaching Roots."
+    />
+    <title>Welcome to Reaching Roots</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body></body>
+  <body>
+    <main class="auth-shell">
+      <section class="welcome-panel" aria-labelledby="welcome-heading">
+        <div class="brand-mark" aria-hidden="true">RR</div>
+        <p class="eyebrow">Reaching Roots</p>
+        <h1 id="welcome-heading">Grow your community.</h1>
+        <p class="welcome-copy">
+          Find meaningful connections, share local events, and help your
+          community take root.
+        </p>
+      </section>
+
+      <section class="form-panel" aria-labelledby="form-heading">
+        <div class="panel-heading">
+          <p class="eyebrow">Welcome back</p>
+          <h2 id="form-heading">Log in to your account</h2>
+          <p id="form-description">Enter your details to continue.</p>
+        </div>
+
+        <div class="mode-switch" role="tablist" aria-label="Account access">
+          <button
+            class="mode-button is-active"
+            id="login-tab"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="login-form"
+          >
+            Log in
+          </button>
+          <button
+            class="mode-button"
+            id="signup-tab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="signup-form"
+          >
+            Create account
+          </button>
+        </div>
+
+        <form id="login-form" class="auth-form">
+          <div class="field-group">
+            <label for="login-username">Username</label>
+            <input
+              id="login-username"
+              name="username"
+              type="text"
+              autocomplete="username"
+              placeholder="Enter your username"
+              required
+            />
+          </div>
+          <div class="field-group">
+            <label for="login-password">Password</label>
+            <input
+              id="login-password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+          <div class="form-options">
+            <label class="checkbox-label">
+              <input type="checkbox" name="remember" />
+              <span>Remember me</span>
+            </label>
+            <a href="#forgot-password">Forgot password?</a>
+          </div>
+          <button class="submit-button" type="submit">Log in</button>
+        </form>
+
+        <form id="signup-form" class="auth-form is-hidden">
+          <div class="form-row">
+            <div class="field-group">
+              <label for="first-name">First name</label>
+              <input
+                id="first-name"
+                name="firstname"
+                type="text"
+                autocomplete="given-name"
+                required
+              />
+            </div>
+            <div class="field-group">
+              <label for="last-name">Last name</label>
+              <input
+                id="last-name"
+                name="lastname"
+                type="text"
+                autocomplete="family-name"
+                required
+              />
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="signup-username">Username</label>
+            <input
+              id="signup-username"
+              name="username"
+              type="text"
+              autocomplete="username"
+              placeholder="Choose a username"
+              required
+            />
+          </div>
+          <div class="form-row">
+            <div class="field-group">
+              <label for="signup-password">Password</label>
+              <input
+                id="signup-password"
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                minlength="8"
+                required
+              />
+            </div>
+            <div class="field-group">
+              <label for="password-verify">Confirm password</label>
+              <input
+                id="password-verify"
+                name="passwordverify"
+                type="password"
+                autocomplete="new-password"
+                minlength="8"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field-group">
+              <label for="birthday">Birthday</label>
+              <input
+                id="birthday"
+                name="birthday"
+                type="date"
+                autocomplete="bday"
+                required
+              />
+            </div>
+            <div class="field-group">
+              <label for="state">State</label>
+              <select id="state" name="state" required>
+                <option value="">Select a state</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="location">City</label>
+            <select id="location" name="location" required disabled>
+              <option value="">Select a state first</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="status">I want to join as a</label>
+            <select id="status" name="status">
+              <option value="attendee">Attendee</option>
+              <option value="host">Host</option>
+            </select>
+          </div>
+          <button class="submit-button" type="submit">Create account</button>
+        </form>
+
+        <p
+          class="form-status"
+          id="form-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+      </section>
+    </main>
+    <script src="login.js" defer></script>
+  </body>
 </html>
