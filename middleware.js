@@ -20,7 +20,6 @@ function validateUserInput(body) {
     lastname,
     birthday,
     location,
-    status = "attendee",
   } = body;
 
   if (
@@ -51,10 +50,6 @@ function validateUserInput(body) {
     return "Passwords must match.";
   }
 
-  if (!["host", "attendee"].includes(status)) {
-    return "Status must be host or attendee.";
-  }
-
   if (location !== undefined && location !== null && location !== "") {
     const locationId = Number(location);
     if (!Number.isInteger(locationId) || locationId < 1) {
@@ -72,15 +67,8 @@ async function createUser(req, res, next) {
     return;
   }
 
-  const {
-    username,
-    password,
-    firstname,
-    lastname,
-    birthday,
-    location,
-    status = "attendee",
-  } = req.body;
+  const {username, password, firstname, lastname, birthday, location} =
+    req.body;
 
   try {
     const passwordHash = await bcrypt.hash(password, 12);
@@ -89,8 +77,8 @@ async function createUser(req, res, next) {
 
     const [result] = await pool.execute(
       `INSERT INTO users
-        (USERNAME, PASSWORD, PASSWORDVERIFY, FIRSTNAME, LASTNAME, BIRTHDAY, LOCATION, STATUS)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        (USERNAME, PASSWORD, PASSWORDVERIFY, FIRSTNAME, LASTNAME, BIRTHDAY, LOCATION)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         username.trim(),
         passwordHash,
@@ -99,7 +87,6 @@ async function createUser(req, res, next) {
         lastname.trim(),
         birthday,
         locationId,
-        status,
       ],
     );
 
@@ -130,4 +117,122 @@ async function listLocations(req, res, next) {
   }
 }
 
-module.exports = {createUser, listLocations, pool};
+function parseUserId(value) {
+  const userId = Number(value);
+  return Number.isInteger(userId) && userId > 0 ? userId : null;
+}
+
+function isValidDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return date.toISOString().slice(0, 10) === value;
+}
+
+async function getAvailability(req, res, next) {
+  const userId = parseUserId(req.params.userId);
+  if (!userId) {
+    res.status(400).json({error: "A valid user ID is required."});
+    return;
+  }
+
+  try {
+    const [users] = await pool.execute(
+      "SELECT id FROM users WHERE id = ? LIMIT 1",
+      [userId],
+    );
+    if (!users[0]) {
+      res.status(404).json({error: "That user does not exist."});
+      return;
+    }
+    const [dates] = await pool.execute(
+      "SELECT id, unavailable_date AS unavailable FROM user_unavailability WHERE user_id = ? ORDER BY unavailable_date",
+      [userId],
+    );
+    res.json({unavailable: dates});
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getUserProfile(req, res, next) {
+  const userId = parseUserId(req.params.userId);
+  if (!userId) {
+    res.status(400).json({error: "A valid user ID is required."});
+    return;
+  }
+
+  try {
+    const [users] = await pool.execute(
+      "SELECT FIRSTNAME AS firstName, LASTNAME AS lastName FROM users WHERE id = ? LIMIT 1",
+      [userId],
+    );
+    if (!users[0]) {
+      res.status(404).json({error: "That user does not exist."});
+      return;
+    }
+    res.json(users[0]);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function updateAvailability(req, res, next) {
+  const userId = parseUserId(req.params.userId);
+  const unavailable = req.body.unavailable;
+  if (
+    !userId ||
+    !Array.isArray(unavailable) ||
+    unavailable.some(
+      (date) => typeof date !== "string" || !isValidDate(date),
+    ) ||
+    new Set(unavailable).size !== unavailable.length
+  ) {
+    res
+      .status(400)
+      .json({error: "Unavailable must be a list of unique valid dates."});
+    return;
+  }
+
+  try {
+    const [users] = await pool.execute(
+      "SELECT id FROM users WHERE id = ? LIMIT 1",
+      [userId],
+    );
+    if (!users[0]) {
+      res.status(404).json({error: "That user does not exist."});
+      return;
+    }
+    const connection = await pool.getConnection();
+    try {
+      await connection.beginTransaction();
+      await connection.execute(
+        "DELETE FROM user_unavailability WHERE user_id = ?",
+        [userId],
+      );
+      for (const date of unavailable) {
+        await connection.execute(
+          "INSERT INTO user_unavailability (user_id, unavailable_date) VALUES (?, ?)",
+          [userId, date],
+        );
+      }
+      await connection.commit();
+      res.json({unavailable, message: "Availability updated."});
+    } catch (error) {
+      await connection.rollback();
+      throw error;
+    } finally {
+      connection.release();
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = {
+  createUser,
+  getAvailability,
+  getUserProfile,
+  listLocations,
+  pool,
+  updateAvailability,
+};

@@ -113,7 +113,7 @@ signupForm.addEventListener("submit", (event) => {
 
   fetch("/api/users", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify(user),
   })
     .then((response) =>
@@ -121,6 +121,7 @@ signupForm.addEventListener("submit", (event) => {
     )
     .then((result) => {
       status.textContent = result.message;
+      window.localStorage.setItem("reachingRootsUserId", String(result.id));
       signupForm.reset();
     })
     .catch((error) => {
@@ -141,11 +142,12 @@ loginForm.addEventListener("submit", (event) => {
 
   fetch("/api/login", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify(credentials),
   })
     .then((response) => readJsonResponse(response, "Unable to log in."))
     .then((result) => {
+      window.localStorage.setItem("reachingRootsUserId", String(result.userId));
       window.location.assign(result.redirect);
     })
     .catch((error) => {

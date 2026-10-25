@@ -232,6 +232,12 @@ a:hover {
   transform: translateY(-1px);
 }
 
+#add-unavailable-button {
+  align-self: end;
+  min-height: 3rem;
+  margin-top: 0;
+}
+
 .form-status {
   min-height: 1.25rem;
   margin: 1rem 0 0;
@@ -371,7 +377,6 @@ a:hover {
   color: var(--muted);
 }
 
-.role-badge,
 .event-count {
   padding: 0.45rem 0.8rem;
   border-radius: 2rem;
@@ -479,9 +484,14 @@ a:hover {
   font-size: 0.85rem;
 }
 
-.host-line {
-  display: inline-block;
+.event-meta {
+  display: grid;
+  gap: 0.35rem;
   margin-top: 0.7rem;
+}
+
+.host-line {
+  display: block;
   color: var(--green-dark);
   font-size: 0.8rem;
   font-weight: 600;
@@ -495,6 +505,27 @@ a:hover {
   font: inherit;
   font-size: 0.8rem;
   font-weight: 700;
+}
+
+.event-action-button {
+  align-self: start;
+  justify-self: end;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--coral);
+  border-radius: 0.35rem;
+  color: var(--white);
+  background: var(--coral);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.event-action-button:hover {
+  border-color: #b9654d;
+  background: #b9654d;
 }
 
 .empty-state {
@@ -532,6 +563,80 @@ a:hover {
 .modal-card > p:not(.eyebrow):not(.form-status) {
   margin: -0.5rem 0 0.5rem;
   color: var(--muted);
+}
+
+.suggestion-list {
+  display: grid;
+  gap: 0.65rem;
+  margin: -0.35rem 0 0.5rem;
+}
+
+.suggestion-list label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  color: var(--ink);
+  background: var(--cream);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.suggestion-list label > span {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.suggestion-list label small {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.suggestion-list label:hover {
+  border-color: var(--green);
+}
+
+.suggestion-list label:has(input:checked) {
+  border-color: var(--green-dark);
+  background: var(--sage);
+  box-shadow: 0 0 0 2px rgba(63, 104, 78, 0.12);
+}
+
+.suggestion-list input {
+  flex: 0 0 auto;
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--green-dark);
+}
+
+.suggestion-list input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.unavailable-date-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.unavailable-date-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 2.5rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  background: var(--cream);
 }
 
 .close-button {
@@ -597,6 +702,11 @@ a:hover {
   }
 
   .event-card .text-button {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .event-action-button {
     grid-column: 2;
     justify-self: start;
   }
