@@ -95,15 +95,15 @@ function renderEvents() {
           ${
             event.userIsHost
               ? `<div class="event-meta">
-                   <span class="host-line">Enrollment code: ${escapeHtml(event.enrollmentCode)}</span>
+                   <span class="host-line">Enrollment Code: ${escapeHtml(event.enrollmentCode)}</span>
                  </div>`
               : ""
           }
         </div>
         ${
           event.userIsHost
-            ? `<button class="event-action-button" type="button" data-schedule-event="${escapeHtml(event.id)}">Set date and location</button>`
-            : `<button class="text-button" type="button" data-remove-event="${escapeHtml(event.id)}">Leave event</button>`
+            ? `<button class="event-action-button" type="button" data-schedule-event="${escapeHtml(event.id)}">Set Date and Location</button>`
+            : `<button class="text-button" type="button" data-remove-event="${escapeHtml(event.id)}">Leave Event</button>`
         }
       `;
       return card;
